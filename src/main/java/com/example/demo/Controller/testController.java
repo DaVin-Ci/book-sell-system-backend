@@ -26,7 +26,7 @@ public class testController {
 //    如果出现名称不一致，则不匹配的属性无法传递参数，值为null；如果是参数类型不一致，则在不能转换的情况下，会返回400，提示请求报文存在语法错误（Interger->String是可以的）
     public String test2(User user) {
         System.out.println(user);
-        return "Hello " + user.getUsername() + "---" + user.getPassword() + "!";
+        return "Hello " + user.getNickname() + "---" + user.getPassword() + "!";
     }
 //    如果要接收JSON格式的请求体 (类型是application/json，在postman中是raw)，则还需要使用@RequestBody
 //    public String test3(@RequestBody User user) {}

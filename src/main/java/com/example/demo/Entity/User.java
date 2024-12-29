@@ -1,34 +1,64 @@
 package com.example.demo.Entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
-//@TableName("users") 手写sql时添加注解就没有作用了
-// 因为底层MyBatis中@TableName注解功能的原理是通过添加as别名实现的
-// 所以只有在MyBatisPlus提供的LambdaQuery查询中 才会在翻译sql语句时自动添加别名；而手写sql太灵活了
+@TableName("t_user")
 public class User {
-    @TableId(type = IdType.AUTO)
-    private Integer id;
-//    @TableField("username")
-    private String username;
-    private String password;
+    @TableId
+    private String uid;//会员编号
+    private String nickname;//昵称
+    private String password;//登录密码
+    private String gender; //性别
+    private String email;//邮箱
 
-    public Integer getId() {
-        return id;
+
+    // 注册表单
+    @TableField(exist = false)
+    private String reloginpass;//确认密码
+    @TableField(exist = false)
+    private String verifyCode;//验证码
+
+    // 修改密码表单
+    @TableField(exist = false) // 这三个字段在数据库中都不存在
+    private String newpass;//新密码
+
+    public String getReloginpass() {
+        return reloginpass;
+    }
+    public void setReloginpass(String reloginpass) {
+        this.reloginpass = reloginpass;
+    }
+    public String getVerifyCode() {
+        return verifyCode;
+    }
+    public void setVerifyCode(String verifyCode) {
+        this.verifyCode = verifyCode;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+
+
+    public String getUid() {
+        return uid;
+    }
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getPassword() {
@@ -39,12 +69,33 @@ public class User {
         this.password = password;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+
+    public String getNewpass() {
+        return newpass;
+    }
+    public void setNewpass(String newpass) {
+        this.newpass = newpass;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
+                "uid='" + uid + '\'' +
+                ", nickname='" + nickname + '\'' +
                 ", password='" + password + '\'' +
+                ", gender='" + gender + '\'' +
+                ", email='" + email + '\'' +
+                ", reloginpass='" + reloginpass + '\'' +
+                ", verifyCode='" + verifyCode + '\'' +
+                ", newpass='" + newpass + '\'' +
                 '}';
     }
 }

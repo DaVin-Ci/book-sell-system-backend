@@ -1,0 +1,128 @@
+以下是一个网上书店销售管理系统的数据表，请你根据该表给出对应建表的SQL语句：
+（1）会员（会员编号，昵称，登录密码，性别，邮箱地址）
+主键：会员编号，  外键：无。
+（2）图书分类（分类编号，分类名称，父级分类编号，分类描述， 排序序号）
+  主键：分类编号，  外键：父级分类编号，参照于本表的分类编号。
+（3）图书（图书编号，图书名称，图书作者，定价，折扣，出版社，版次，页数，字数，分类编号，封面路径，缩略图路径，排序序号）
+主键：图书编号、分类编号共同组成， 外键：分类编号，参照于图书分类表的主键分类编号。
+（4）购物车条目（购物车编号，数量，图书编号，会员编号，创建时间，支付时间，订单状态，排序序号）
+主键：购物车编号、图书编号，会员编号共同组成， 外键：图书编号，参照于图书表的主键图书编号；会员编号，参照于会员表的主键会员编号。
+（5）订单（订单编号，创建时间，合计金额，订单状态。收货地址，会员编号）
+主键：订单编号，会员编号共同组成， 外键：会员编号，参照于会员表的主键会员编号。
+（6）订单条目（订单条目编号，数量，小计金额，图书编号，图书名称，单价，缩略图路径，所属订单编号）
+主键：订单条目编号、图书编号，所属订单编号共同组成， 外键：图书编号，参照于图书表的主键图书编号；所属订单编号，参照于订单表的主键订单编号。
+以下是详细字段说明：
+(1) t_user会员表：存储注册的会员基本信息。
+字段名称，字段说明，类型定义，属性限定
+uid，会员编号，Char(10)，Primary Key；
+nickname，昵称，Varchar (20)，Not Null；
+password，登录密码，Varchar (20)，Not Null；
+gender，性别，Char (2)，Not Null "男"或"女"；
+emal，邮箱地址，Varchar (40)；
+
+(2) t_category图书分类表：存储图书的分类情况。
+字段名称，字段说明，类型定义，属性限定
+cid，分类编号，Char(10)，Primary Key；
+cname，分类名称，Varchar(60)，Not Null；
+pid，父级分类编号，Char(10)，Primary Key；
+desc，分类描述，Varchar(100)，Not Null；
+cate_order，排序序号，int，Not Null；
+
+(3)t_book：存储图书的基本情况。
+字段名称，字段说明，类型定义，属性限定
+bid，图书编号，Char(10)，Primary Key；
+bname，图书名称，Varchar (100)，Not Null；
+author，图书作者，Varchar (50)，Not Null；
+price，定价，decimal(8,2)，Not Null；
+discount，折扣，decimal(3,1)，Not Null；
+press，出版社，Varchar (20)，Not Null；
+edition，版次，int，Not Null；
+pageNum，页数，int，Not Null；
+wordNum，字数，int，Not Null；
+cid，分类编号，Char(10)，Primary Key；
+img，封面路径，varchar(100)，Not Null；
+thumimg，缩略图路径，varchar(100)，Not Null；
+b_order，排序序号，int，Not Null；
+
+(4)t_cartiitem：存储购物车条目的情况。
+字段名称，字段说明，类型定义，属性限定
+c_itemid，购物车编号，Char(10)，Primary Key；
+quantity，数量，int，Not Null；
+bid，图书编号，Char(10)，Primary Key；
+uid，会员编号，Char(10)，Primary Key；
+carti_order，排序序号，int，Not Null；
+
+(5)t_order：存储订单的情况。
+字段名称，字段说明，类型定义，属性限定
+oid，订单编号，Char(10)，Primary Key；
+ordertime，创建时间，DateTime，Not Null；
+total，合计金额，decimal(10,2)，Not Null；
+status，订单状态，int，1、2、3、4、5；
+address，收货地址，，varchar(100)，Not Null；
+uid，会员编号，Char(10)，Primary Key；
+
+（6）t_orderitem表：存储订单条目的详细情况。
+字段名称，字段说明，类型定义，属性限定
+o_itemid，订单条目编号，Char(16)，Primary Key；
+quantity，数量，int，Not Null；
+subtotal，小计金额，decimal(8,2)，Not Null；
+bid，图书编号，Char(6)，Primary Key；
+bname，图书名称，Varchar (100)，Not Null；
+price，单价，decimal(8,2)，Not Null；
+thumimg，缩略图路径，varchar(100)，Not Null；
+oid，所属订单编号,，Char(10)，Primary Key；
+
+
+
+
+
+
+
+package com.example.demo.Entity;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+
+//@TableName("users") 手写sql时添加注解就没有作用了
+// 因为底层MyBatis中@TableName注解功能的原理是通过添加as别名实现的
+// 所以只有在MyBatisPlus提供的LambdaQuery查询中 才会在翻译sql语句时自动添加别名；而手写sql太灵活了
+public class User-demo {
+    @TableId(type = IdType.AUTO)
+    private Integer id;
+//    @TableField("username")
+    private String username;
+    private String password;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+}

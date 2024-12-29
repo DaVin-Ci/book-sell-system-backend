@@ -17,13 +17,11 @@ public class UserController {
     private UserMapper userMapper;
 
     @ApiOperation("获取用户信息") // Swagger添加注解来描述接口信息
-    @GetMapping("/user/{id}")
-    public String getUserById(@PathVariable int id) {
-        User user = userService.getUserById(id);
-        System.out.println("===================================>" + id);
-        System.out.println(user);
-//        return "获取ID: " + id + "的信息";
-        return user + "";
+    @GetMapping("/user/{uid}")
+    public String getUserByUUId(@PathVariable String uid) {
+        User user = userService.getUserById(uid);
+        System.out.println("===================================>" + user.getNickname());
+        return "====================>" + user + "";
     }
 
     @PostMapping("/user")

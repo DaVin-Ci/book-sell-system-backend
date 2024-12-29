@@ -1,5 +1,6 @@
 package com.example.demo.Service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.demo.Entity.User;
 import com.example.demo.Mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,14 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public User getUserById(int id) {
-        return userMapper.selectById(id);
+    public int add(User user) {
+        return userMapper.insert(user);
     }
 
     @Override
-    public int add(User user) {
-        return userMapper.insert(user);
+    public  User getUserById(String id) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id", id);
+        return userMapper.selectOne(queryWrapper);
     }
 }

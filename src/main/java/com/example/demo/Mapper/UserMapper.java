@@ -20,5 +20,6 @@ import java.util.List;
 //    public int add(User user);
 //}
 public interface UserMapper extends BaseMapper<User> {
-
+    @Select("select * from user where id=#{id}")
+    public User find(int id);
 }
