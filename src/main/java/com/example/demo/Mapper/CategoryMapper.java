@@ -2,10 +2,7 @@ package com.example.demo.Mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.demo.Entity.Category;
-import org.apache.ibatis.annotations.One;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.mapstruct.Mapper;
 
 import java.util.List;
@@ -22,5 +19,14 @@ public interface CategoryMapper extends BaseMapper<Category> {
             )
     })
     Category findById(String cid);
+
+    @Select("select  count(*) from  t_category where pid = #{cid}")
+    int countByParentCid(String cid);
+
+    @Insert("insert into t_category(cid,cname,pid,description) values(#{cid}, #{cname}, #{parent.cid}, #{description})")
+    int insertChild(Category category);
+
+    @Update("update t_category set cname=#{cname},pid=#{parent.cid},description=#{description} where cid = #{cid}")
+    void updateChild(Category category);
 }
 

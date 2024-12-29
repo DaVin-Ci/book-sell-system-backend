@@ -25,7 +25,7 @@ emal，邮箱地址，Varchar (40)；
 cid，分类编号，Char(10)，Primary Key；
 cname，分类名称，Varchar(60)，Not Null；
 pid，父级分类编号，Char(10)，Primary Key；
-desc，分类描述，Varchar(100)，Not Null；
+description，分类描述，Varchar(100)，Not Null；
 cate_order，排序序号，int，Not Null；
 
 (3)t_book：存储图书的基本情况。

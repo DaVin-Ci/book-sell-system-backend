@@ -6,6 +6,7 @@ import com.example.demo.Entity.User;
 import com.example.demo.Mapper.UserMapper;
 import com.example.demo.Service.BookService;
 import com.example.demo.Service.UserService;
+import com.example.demo.Utils.Result;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,66 +24,73 @@ public class BookController {
 
     @ApiOperation("获取图书信息") // Swagger添加注解来描述接口信息
     @GetMapping("/{bid}")
-    public String getBookByCid(@PathVariable String bid) throws SQLException {
+    public Result getBookByCid(@PathVariable String bid) throws SQLException {
         Book book = bookService.findByBid(bid);
-        System.out.println("===================================>" + book.getBname());
-        return "====================>" + book + "";
+//        System.out.println("===================================>" + book.getBname());
+        return Result.ok().data("data", book);
     }
 
     @ApiOperation("根据分类查询图书")
     @GetMapping("/category/{cid}")
-    public IPage<Book> getBooksByCategory(@PathVariable String cid, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) throws SQLException {
-        return bookService.getBooksByCategory(cid, page, size);
+    public Result getBooksByCategory(@PathVariable String cid, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) throws SQLException {
+        IPage<Book> book = bookService.getBooksByCategory(cid, page, size);
+        return Result.ok().data("data", book);
     }
 
     @ApiOperation("根据书名查询图书")
     @GetMapping("/search/byName")
-    public IPage<Book> searchBooksByName(@RequestParam String bname, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) throws SQLException {
-        return bookService.searchBooksByName(bname, page, size);
+    public Result searchBooksByName(@RequestParam String bname, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) throws SQLException {
+        IPage<Book> book = bookService.searchBooksByName(bname, page, size);
+        return Result.ok().data("data", book);
     }
 
     @ApiOperation("根据作者查询图书")
     @GetMapping("/search/byAuthor")
-    public IPage<Book> searchBooksByAuthor(@RequestParam String author, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) throws SQLException{
-        return bookService.searchBooksByAuthor(author, page, size);
+    public Result searchBooksByAuthor(@RequestParam String author, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) throws SQLException{
+        IPage<Book> book = bookService.searchBooksByAuthor(author, page, size);
+        return Result.ok().data("data", book);
     }
 
     @ApiOperation("根据出版社查询图书")
     @GetMapping("/search/byPress")
-    public IPage<Book> searchBooksByPress(@RequestParam String press, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) throws SQLException {
-        return bookService.searchBooksByPress(press, page, size);
+    public Result searchBooksByPress(@RequestParam String press, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) throws SQLException {
+        IPage<Book> book = bookService.searchBooksByPress(press, page, size);
+        return Result.ok().data("data", book);
     }
 
     @ApiOperation("组合条件，综合查询图书")
     @GetMapping("/search")
-    public IPage<Book> searchBooks(@RequestParam(required = false) String bname, @RequestParam(required = false) String author, @RequestParam(required = false) String press, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) throws SQLException {
-        return bookService.searchBooks(bname, author, press, page, size);
+    public Result searchBooks(@RequestParam(required = false) String bname, @RequestParam(required = false) String author, @RequestParam(required = false) String press, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) throws SQLException {
+        IPage<Book> book = bookService.searchBooks(bname, author, press, page, size);
+        return Result.ok().data("data", book);
     }
     @ApiOperation("根据分类查询图书总数")
     @GetMapping("/category/{cid}/count")
-    public int getBookCountByCategory(@PathVariable String cid) throws SQLException{
-        return bookService.getBookCountByCategory(cid);
+    public Result getBookCountByCategory(@PathVariable String cid) throws SQLException{
+        int num = bookService.getBookCountByCategory(cid);
+        return Result.ok().data("data", num);
     }
 
-
+    @ApiOperation("添加图书信息")
     @PostMapping("/")
-    public String addBook(@RequestBody Map<String, Object> requestData) throws SQLException {
+    public Result addBook(@RequestBody Map<String, Object> requestData) throws SQLException {
 //        System.out.println("=================================>" + book);
-        int rows = bookService.add(requestData);
-        return "================>添加成功！" + "----" + rows;
+        bookService.add(requestData);
+        return Result.ok();
     }
 
+    @ApiOperation("修改图书信息（不包括bid、img、thumimg）")
     @PutMapping("/")
-public String updateBook(@RequestBody Map<String, Object> requestData) throws SQLException {
+public Result updateBook(@RequestBody Map<String, Object> requestData) throws SQLException {
 //        System.out.println("=================================>" + book);
         bookService.edit(requestData);
-        return "修改成功啦！！";
-//        return "================>添加成功！" + "----" + rows;
+        return Result.ok();
     }
-//
-//    @DeleteMapping("/user/{id}")
-//    public String deleteUser(@PathVariable int id) {
-//        System.out.println(id);
-//        return "删除ID:" + id;
-//    }
+
+    @ApiOperation("删除图书")
+    @DeleteMapping("/{bid}")
+    public Result deleteBook(@PathVariable String bid) throws SQLException {
+        bookService.delete(bid);
+        return Result.ok().data("data", bid);
+    }
 }
