@@ -106,11 +106,6 @@ public class Book {
         this.category = _category;
     }
 
-    public String getCid() {
-        System.out.println("========================>获取了分类" + category.getCid());
-        return category.getCid();
-    }
-
 
     public String getImg() {
         return img;

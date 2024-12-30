@@ -1,22 +1,25 @@
 package com.example.demo.Entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 @TableName("t_orderitem")
 public class OrderItem {
     @TableId
-    private String o_itemid;//订单条目编号
+    private String oitemid;//订单条目编号
     private int quantity;//数量
     private double subtotal;//小计
+    @TableField(exist = false)
     private Book book;//所关联的Book
+    @TableField(exist = false)
     private Order order;//所属的订单
 
     public String getOrderItemId() {
-        return o_itemid;
+        return oitemid;
     }
     public void setOrderItemId(String orderItemId) {
-        this.o_itemid = orderItemId;
+        this.oitemid = orderItemId;
     }
     public int getQuantity() {
         return quantity;
@@ -43,5 +46,14 @@ public class OrderItem {
         this.order = order;
     }
 
-
+    @Override
+    public String toString() {
+        return "OrderItem{" +
+                "oitemid='" + oitemid + '\'' +
+                ", quantity=" + quantity +
+                ", subtotal=" + subtotal +
+                ", book=" + book +
+                ", order=" + order +
+                '}';
+    }
 }

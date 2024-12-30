@@ -58,7 +58,8 @@ public class CategoryController {
         if (deletedCount > 0) { // 删除成功
             return Result.ok().data("data", cid);
         } else {
-            return Result.error().data("message", "该分类下还有子目录或图书！无法删除呢~");
+            // 该分类下还有子目录或图书！无法删除
+            return Result.error().data("data", cid);
         }
 
     }

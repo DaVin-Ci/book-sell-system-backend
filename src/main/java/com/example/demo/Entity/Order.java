@@ -1,5 +1,6 @@
 package com.example.demo.Entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -9,20 +10,22 @@ import java.util.List;
 public class Order {
     @TableId
     private String oid;//订单编号
+    @TableField("ordertime")
     private String orderTime;//创建时间
     private double total;//总计金额
     private int status;//订单状态
     // 1未付款, 2已付款但未发货, 3已发货未确认收货, 4确认收货了交易成功, 5已取消(未付款的订单才能取消)
     private String address;//收货地址
+    @TableField(exist = false)
     private User owner;//订单的所有者
+    @TableField(exist = false)
+    private List<OrderItem> itemslist;
 
-    private List<OrderItem> orderItemList;
-
-    public List<OrderItem> getOrderItemList() {
-        return orderItemList;
+    public List<OrderItem> getItemslist() {
+        return itemslist;
     }
-    public void setOrderItemList(List<OrderItem> orderItemList) {
-        this.orderItemList = orderItemList;
+    public void setItemslist(List<OrderItem> itemslist) {
+        this.itemslist = itemslist;
     }
     public String getOid() {
         return oid;
@@ -61,4 +64,16 @@ public class Order {
         this.owner = owner;
     }
 
+    @Override
+    public String toString() {
+        return "Order{" +
+                "oid='" + oid + '\'' +
+                ", orderTime='" + orderTime + '\'' +
+                ", total=" + total +
+                ", status=" + status +
+                ", address='" + address + '\'' +
+                ", owner=" + owner +
+                ", itemslist=" + itemslist +
+                '}';
+    }
 }

@@ -37,20 +37,12 @@ public class User {
         this.verifyCode = verifyCode;
     }
 
-
-
     public String getUid() {
         return uid;
     }
+
     public void setUid(String uid) {
         this.uid = uid;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getNickname() {
@@ -77,10 +69,18 @@ public class User {
         this.gender = gender;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getNewpass() {
         return newpass;
     }
+
     public void setNewpass(String newpass) {
         this.newpass = newpass;
     }

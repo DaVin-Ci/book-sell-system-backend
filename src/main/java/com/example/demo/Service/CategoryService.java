@@ -1,6 +1,5 @@
 package com.example.demo.Service;
 
-import com.example.demo.Entity.Book;
 import com.example.demo.Entity.Category;
 
 import java.sql.SQLException;
