@@ -62,19 +62,33 @@
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus-boot-starter</artifactId>
 			<version>3.4.2</version>
-		</dependency><dependency>
+		</dependency>
 		<!--mysql驱动依赖-->
-		<groupId>mysql</groupId>
-		<artifactId>mysql-connector-java</artifactId>
-		<scope>runtime</scope>
-		<version>5.1.6</version>
-	</dependency>
 		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+			<version>5.1.6</version>
+		</dependency>
 		<!--数据连接池 druid-->
-		<groupId>com.alibaba</groupId>
-		<artifactId>druid-spring-boot-starter</artifactId>
-		<version>1.1.20</version>
-	</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid-spring-boot-starter</artifactId>
+			<version>1.1.20</version>
+		</dependency>
+		<!--JWT跨域认证-->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version>
+		</dependency>
+<!--		生成JWT令牌时，尝试使用Base64解码时引用了 javax/xml/bind/DatatypeConverter 类，而这个类在你当前的Java环境(Java 9及以上版本)中不可用-->
+<!--		JAXB依赖: 恢复对javax.xml.bind.DatatypeConverter的访问-->
+		<dependency>
+			<groupId>org.glassfish.jaxb</groupId>
+			<artifactId>jaxb-runtime</artifactId>
+			<version>2.3.3</version>
+		</dependency>
 	</dependencies>
 
 	<build>
